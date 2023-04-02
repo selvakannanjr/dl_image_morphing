@@ -6,6 +6,11 @@ import numpy as np
 from skimage import io
 import cv2
 from imutils import face_utils
+import torch 
+from torchvision import transforms, utils
+from PIL import Image
+from classdef import CustomFacePointsModel
+
 
 class NoFaceFound(Exception):
    """Raised when there is no face found"""
@@ -80,8 +85,14 @@ def crop_image_help(img1,img2):
 
 def generate_face_correspondences(theImage1, theImage2):
     # Detect the points of face.
+    data_transform =   transforms.Compose([transforms.Resize((224,224)),
+                                transforms.ToTensor(),
+                                transforms.Normalize(mean = [0.5, 0.5, 0.5],std = [0.5, 0.5, 0.5])])
+    model = CustomFacePointsModel()
+    model=torch.load('../modelfinal.pth')
+    model.eval()
     detector = dlib.get_frontal_face_detector()
-    predictor = dlib.shape_predictor('code/utils/shape_predictor_68_face_landmarks.dat')
+    #predictor = dlib.shape_predictor('code/utils/shape_predictor_68_face_landmarks.dat')
     corresp = np.zeros((68,2))
 
     imgList = crop_image(theImage1,theImage2)
@@ -115,16 +126,20 @@ def generate_face_correspondences(theImage1, theImage2):
             
 
         j=j+1
-
+        from PIL import Image
+        color_coverted = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = Image.fromarray(color_coverted)
         for k, rect in enumerate(dets):
             
             # Get the landmarks/parts for the face in rect.
-            shape = predictor(img, rect)
+            
+            img = data_transform(img).unsqueeze(0)
+            shape=model(img).detach().numpy().reshape(68,2)
             # corresp = face_utils.shape_to_np(shape)
             
             for i in range(0,68):
-                x = shape.part(i).x
-                y = shape.part(i).y
+                x = shape[i][0]
+                y = shape[i][0]
                 currList.append((x, y))
                 corresp[i][0] += x
                 corresp[i][1] += y
