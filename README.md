@@ -7,7 +7,7 @@
 * Transform the image w.r.t the triangle
 
 ## Which dataset is used?
-300w dataset
+[300w](https://ibug.doc.ic.ac.uk/resources/300-W/) dataset
 
 ## How many kepoints are identified?
 68 facial keypoints
