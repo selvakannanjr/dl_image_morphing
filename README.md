@@ -16,7 +16,7 @@
 ```
 git clone git@github.com:selvakannanjr/dl_image_morphing.git
 cd face-morphing-multiple-images
-python code/selva.py --folder aligned_images --output video_output.mp4 --duration 4
+python code/main.py --folder aligned_images --output video_output.mp4 --duration 4
 ```
 
 ## Sample Output
