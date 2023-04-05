@@ -23,3 +23,7 @@ python code/main.py --folder aligned_images --output video_output.mp4 --duration
 ## Sample Output
 
 
+
+
+https://user-images.githubusercontent.com/26718058/230106604-857b677e-d577-4ce7-a0db-287ba4432f54.mp4
+
