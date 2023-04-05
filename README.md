@@ -16,6 +16,7 @@
 ```
 git clone git@github.com:selvakannanjr/dl_image_morphing.git
 cd face-morphing-multiple-images
+python code/utils/align_images.py raw_images/ aligned_images/ --output_size=1024 # To align the images
 python code/main.py --folder aligned_images --output video_output.mp4 --duration 4
 ```
 
